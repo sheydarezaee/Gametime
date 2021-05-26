@@ -1,15 +1,14 @@
 // import 'react-native-gesture-handler'
-import React from 'react'
-import { StatusBar } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StatusBar, ActivityIndicator } from 'react-native'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-// import type {Node} from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
-// import { persistCache } from 'apollo3-cache-persist'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { persistCache } from 'apollo3-cache-persist'
 import { MainSearch } from './src/components/main_search/MainSearch'
-import { SubSearch } from './src/components/sub_search/SubSearch'
-// import { Colors } from 'react-native/Libraries/NewAppScreen'
+import SubSearch from './src/components/sub_search/SubSearch'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 const Stack = createStackNavigator()
 
@@ -18,48 +17,39 @@ const ACCESS_TOKEN = `I-kwtgDjSW9MXNR8LlvIy6PSCi0g3WvzIqOHrLbKPWY61Nu9bqvHtJj3OX
 
 const client = new ApolloClient({
   uri: 'https://api.yelp.com/v3/graphql',
+  connectToDevTools: true,
   headers: {
-    Authorization: `Bearer ${ACCESS_TOKEN}`
+    Authorization: `Bearer ${ACCESS_TOKEN}`,
   },
   cache,
   defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 })
 
 const App = () => {
-  // const [loadingCache, setLoadingCache] = useState(true)
+  const [loadingCache, setLoadingCache] = useState(true)
 
-  // useEffect(() => {
-  //   persistCache({
-  //     cache,
-  //     storage: AsyncStorage,
-  //   }).then(() => setLoadingCache(false))
-  // }, [])
+  useEffect(() => {
+    persistCache({
+      cache,
+      storage: AsyncStorage,
+    }).then(() => setLoadingCache(false))
+  }, [])
 
-  // if (loadingCache) {
-  //   return <ActivityIndicator animating={loadingCache} color={Colors.blue} />
-  // }
+  if (loadingCache) {
+    return <ActivityIndicator animating={loadingCache} color={Colors.blue} />
+  }
 
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="MainSearch">
           <Stack.Screen
-            name="MainSearch"
+            name="Yelp Home"
             component={MainSearch}
           />
           <Stack.Screen
-            name="SubSearch"  
+            name="Search"  
             component={SubSearch}
-            // options={({
-            //   route: {
-            //     params: {
-            //       chapter: { number, title },
-            //     },
-            //   },
-            // }) => ({
-            //   title: number ? `Chapter ${number}: ${title}` : title,
-            //   gestureResponseDistance: { horizontal: 500 },
-            // })}
           />
         </Stack.Navigator>
         <StatusBar barStyle="dark-content" />

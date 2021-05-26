@@ -1,90 +1,105 @@
-import React, { Component } from 'react'
-import { View, ScrollView, TextInput, StatusBar, FlatList, Pressable, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View, ScrollView, TextInput, StatusBar, FlatList, Text, Dimensions, TouchableOpacity } from 'react-native'
 import { gql, useQuery } from '@apollo/client'
 import styles from './SubSearch.Styles'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import Map from '../map/Map'
 import Loading from '../Loading'
+const {height} = Dimensions.get('window')
 
-const searchItem = ({ chapter }) => {
-  const { number, title } = chapter
-  let header, subheader
-
-  if (number) {
-    header = `Chapter ${number}`
-    subheader = title
-  } else {
-    header = title
-  }
-
-  return (
-    <Pressable style={styles.item}>
-      <Text style={styles.header}>{header}</Text>
-      {subheader && <Text style={styles.subheader}>{subheader}</Text>}
-    </Pressable>
-  )
-}
-
-export class SubSearch extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      type: '',
-      location: '', 
-    }
-  }
-
-  handleSubmit = () => {}
-
-  render() {
-    const CHAPTERS_QUERY = gql`
-    query Chapters {
-      chapters {
-        id
-        number
-        title
+const GET_ITEMS = gql`
+    query Items($term: String!, $location: String!) {
+      items (
+        term: $term,
+        location: $location,
+        limit: 10) {
+        business {
+          name
+          rating
+          review_count
+          location {
+            address1
+            city
+            state
+            country
+          }
+        }
       }
     }
   `
-    const { data, loading } = useQuery(CHAPTERS_QUERY)
 
-    if (loading) {
-      return <Loading />
-    }
+const SearchItem = ({ searchItem }) => {
+  const { name, rating, review_count, location } = searchItem
+  const { address1, city, state, country } = location
 
-    return (
-      <ScrollView 
-        contentInsetAdjustmentBehavior="automatic"
-        style={Colors.darker}
-      >
-        <StatusBar barStyle="dark-content" />
-        <View style={styles.searchButtonContainer}>
-          <TextInput
-            defaultValue="Cleaners, movers, sushi, .. what you desire"
-            style={styles.searchText}
-            onChangeText={(value) => this.setState({ type: value })}
-            placeholderTextColor={Colors.grey}
-          />
-        </View>
-        <View style={styles.searchButtonContainer}>
-          <TextInput
-            defaultValue=" Current location"
-            style={styles.searchText}
-            onChangeText={(value) => this.setState({ location: value })}
-            placeholderTextColor={Colors.grey}
-          />
-        </View>
-
-        <FlatList
-          data={data.chapters}
-          renderItem={({ item }) => <searchItem chapter={item} />}
-          keyExtractor={(chapter) => chapter.id.toString()}
-        />
-
-      </ScrollView>
-    )
-  }
+  return (
+    <View style={styles.itemContainer}>
+      <Text style={styles.header}>{name}</Text>
+      <Text style={styles.subheader}>{`rating: ${rating} - ${review_count} reviews`}</Text>
+      <Text style={styles.subheader}>{`${address1}, ${city}, ${state}, ${country}`}</Text>
+    </View>
+  )
 }
 
-SubSearch.propTypes = {}
+const SubSearch = () => {
+  const [term, setTerm] = useState('')
+  const [location, setLocation] =useState('')
+  const [isMapView, setMapView] = useState(false)
+
+  const { loading, data } = useQuery(GET_ITEMS, {
+    variables: { term, location },
+  })
+
+  if (loading) {
+    return <Loading />
+  }
+
+  return (
+    <ScrollView 
+      contentInsetAdjustmentBehavior="automatic"
+    >
+      <StatusBar barStyle="dark-content" />
+      <View style={styles.searchButtonContainer}>
+        <TextInput
+          placeholder="Cleaners, movers, sushi, .. what you desire"
+          value={term}
+          style={styles.searchText}
+          onChangeText={value => setTerm(value)}
+          placeholderTextColor={Colors.grey}
+        />
+      </View>
+      <View style={[styles.searchButtonContainer, { marginBottom: 10 }]}>
+        <TextInput
+          placeholder=" Current location"
+          value={location}
+          style={styles.searchText}
+          onChangeText={value => setLocation(value)}
+          placeholderTextColor={Colors.grey}
+        />
+      </View>
+      { isMapView ? (
+        <View style={{ flex: 1, width: '100%', height }}>
+          <Map />
+        </View> 
+      ) : (
+        <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+          <FlatList
+            data={data.search.business}
+            renderItem={({ item }) => <SearchItem searchItem={item} />}
+            keyExtractor={(searchItem) => searchItem.name}
+          />
+        </View>
+      )}
+      <TouchableOpacity
+        onPress={() => setMapView(!isMapView)}
+        style={styles.searchButton}
+      >
+        <Text style={styles.viewButtonText}>{isMapView ? 'List View' : 'Map View'}</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  )
+}
+
+export default SubSearch
 
 

@@ -1,5 +1,4 @@
 import { StyleSheet, Platform} from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 export default StyleSheet.create({
   topImageContainer: {
@@ -18,8 +17,8 @@ export default StyleSheet.create({
     borderRadius: 6,
     padding: 20,
     marginHorizontal: 20,
-    backgroundColor: Colors.white, 
-    shadowColor: Colors.black,
+    backgroundColor: 'white', 
+    shadowColor: 'black',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -34,7 +33,7 @@ export default StyleSheet.create({
     marginRight: 20,
   },
   searchText: {
-    color: 'grey',
+    color: 'dimgray',
     fontSize: 14, 
     fontFamily: Platform.OS === 'android' ? 'Roboto' : undefined
   },

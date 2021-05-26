@@ -15,7 +15,7 @@ export class MainSearch extends Component {
   }
 
   handleSearch = () => {
-    this.props.navigation.navigate('SubSearch')
+    this.props.navigation.navigate('Search')
   }
 
   render() {
@@ -38,7 +38,7 @@ export class MainSearch extends Component {
           <View >
           <Image source={searchIcon} style={styles.searchIcon}/>
           </View>
-          <Text style={styles.searchText}>Search for anything you desire</Text>
+          <Text style={styles.searchText}>Search for anything you desire ...</Text>
         </TouchableOpacity>
       </ScrollView>
     )

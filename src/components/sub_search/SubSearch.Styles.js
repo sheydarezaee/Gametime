@@ -1,5 +1,5 @@
-import { StyleSheet, Platform} from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+import { StyleSheet, Platform, Dimensions } from 'react-native'
+const hasNotch = Platform.OS === 'ios' && Dimensions.get('window').height >= 812
 
 export default StyleSheet.create({
   topImageContainer: {
@@ -16,10 +16,11 @@ export default StyleSheet.create({
     flex: 1,
     marginTop: 15,
     paddingHorizontal: 15,
+    paddingVertical: hasNotch ? 15 : 0,
     borderRadius: 6,
     marginHorizontal: 15,
-    backgroundColor: Colors.white, 
-    shadowColor: Colors.black,
+    backgroundColor: 'white', 
+    shadowColor: 'black',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -33,7 +34,7 @@ export default StyleSheet.create({
     marginRight: 20,
   },
   searchText: {
-    color: 'grey',
+    color: 'dimgray',
     fontSize: 14, 
     fontFamily: Platform.OS === 'android' ? 'Roboto' : undefined
   },
@@ -45,5 +46,45 @@ export default StyleSheet.create({
     textAlignVertical: 'top',
     paddingVertical: 10,
     height: 40,
+  },
+  itemContainer: {
+    marginBottom: 20,
+  },
+  header: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+    paddingBottom: 5,
+  },
+  subheader: {
+    paddingBottom: 5,
+    fontSize: 14,
+    color: 'dimgray',
+  },
+  searchButton: {
+    height: 40,
+    width: '25%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 5000,
+    right: 5,
+    top: 150,
+    bottom: 30,
+    marginBottom: 10,
+    marginRight: 15,
+    borderRadius: 10,
+    backgroundColor: 'white', 
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  viewButtonText: {
+    color: 'dimgray',
+    fontSize: 16,
   },
 })
