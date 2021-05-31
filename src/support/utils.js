@@ -1,1 +1,14 @@
-export const ACCESS_TOKEN = `I-kwtgDjSW9MXNR8LlvIy6PSCi0g3WvzIqOHrLbKPWY61Nu9bqvHtJj3OXReFiQdeDiYFq--ihwxVKTOe2wSv4Oj4IR60a5jtuPIJiDK2FpEQ6qE1fAYppegdQqsYHYx`
+export const getPickerCategories = (results) => {
+  const categories = results.reduce((acc, current) => {
+    acc.push(current && current.categories)
+    return acc
+  }, [])
+  const uniqueCategories = [... new Set([].concat(...categories).map((i) => i.title))]
+  return uniqueCategories.reduce((acc, current) => {
+    acc.push({
+      label: current,
+      value: current,
+    })
+    return acc
+  }, [])
+}

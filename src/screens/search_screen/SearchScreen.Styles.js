@@ -87,4 +87,8 @@ export default StyleSheet.create({
     color: 'dimgray',
     fontSize: 16,
   },
+  listContainer: { 
+    marginHorizontal: 20,
+    marginTop: 20 
+  }
 })
