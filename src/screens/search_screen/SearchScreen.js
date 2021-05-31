@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { View, ScrollView, StatusBar, FlatList, Text, TouchableOpacity } from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
 import styles from './SearchScreen.Styles'
-import yelp from '../../api/yelp'
-import { GET_ITEMS_QUERY, baseUrl } from '../../support/constants'
 import SearchBar from '../../components/search_bar/SearchBar'
 import Picker from '../../components/picker/Picker'
-import { getPickerCategories } from '../../support/utils'
+import { fetchSearchData } from '../../redux/actions/SearchActionsThunks'
 
 
 const SearchItem = ({ searchItem, navigation }) => {
@@ -26,28 +25,22 @@ const SearchItem = ({ searchItem, navigation }) => {
   )
 }
 
+const Separator = () => {
+  return <View style={{ borderBottomWidth: 1, borderBottomColor: '#a9a9a9', marginBottom: 15 }} />
+}
+
 const SearchScreen = ({ navigation }) => {
   const [term, setTerm] = useState('')
   const [location, setLocation] =useState('')
   const [data, setData ] = useState([])
   const [ category, setCategory ] = useState('')
-  const [ pickerItems, setPickerItems ] = useState([])
+  const dispatch = useDispatch()
+
+  const { searchedData, showCategoryFilter, categoryList} = useSelector(state => state).SearchReducer
 
   const handleSearch = () => {
-    yelp.post(
-      `${baseUrl}`, {
-        query: GET_ITEMS_QUERY,
-        variables: { term, location }
-      }
-    )
-    .then((response) => {
-      const results = response.data.data.search.business
-      setData(results)
-      const pickerCategories = getPickerCategories(results)
-      setPickerItems(pickerCategories)
-    }, (error) => {
-      console.log(error)
-    })
+    dispatch(fetchSearchData(term, location))
+    setData(searchedData)
   }  
 
   return (
@@ -62,20 +55,23 @@ const SearchScreen = ({ navigation }) => {
         onLocationChange={(newLocation)=> setLocation(newLocation)}
         onHandleSearch={() => handleSearch()}
       />
-      <Picker
-        items={pickerItems}
-        label="Select a category"
-        onValueChange={(value) => {
-          setCategory(value)
-          setData(data.filter(i => i.categories[0].title === value))
-        }}
-        value={category}
-      />
+      {showCategoryFilter && categoryList.length > 0 && (
+        <Picker
+          items={categoryList}
+          label="Select a category"
+          onValueChange={(value) => {
+            setCategory(value)
+            setData(searchedData.filter(i => i.categories[0].title === value))
+          }}
+          value={category}
+       />
+      )}
       <View style={styles.listContainer}>
         <FlatList
           data={data}
           renderItem={({ item }) => <SearchItem searchItem={item} navigation={navigation} />}
           keyExtractor={(searchItem) => searchItem.name}
+          ItemSeparatorComponent={() => Separator()}
         />
       </View>
     </ScrollView>
