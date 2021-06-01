@@ -1,15 +1,16 @@
 import { StyleSheet } from 'react-native'
+import { Colors } from '../../support/constants'
 
 const pickerStyles = {
   fontSize: 14,
-  color: 'gray',
+  color: Colors.gray,
   borderWidth: 1,
-  borderColor: 'white',
+  borderColor: Colors.white,
   height: 55,
   borderRadius: 6,
   padding: 13,
-  backgroundColor: 'white', 
-  shadowColor: 'black',
+  backgroundColor: Colors.white, 
+  shadowColor: Colors.black,
   shadowOffset: {
     width: 0,
     height: 2,
@@ -29,6 +30,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 20,
     marginVertical: 10,
-    backgroundColor: 'white'
+    backgroundColor: Colors.white,
   },
 })

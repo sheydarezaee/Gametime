@@ -7,10 +7,8 @@ A minimal Yelp client made in React Native which leverages the Yelp GraphQL API
 ● The following functionalities are supported: 
 ○ Searching a “term” such as “Dinner” or “Mini Golf” 
 ○ Implementing search based on the user’s location
-○ 2 different ways to view the points of interest with a toggle between them 
-■ List View 
-■ Map View 
-● A README.md file (markdown) describing the functionality of the app along with the pros and cons of the approach, and the steps to run the project locally along with any dependencies which need to be installed prior to running the project. 
+○ Implementing Category based filtering using the categories
+○ 2 different ways to view the points of interest, details view and map
 
 ## Utilized
 

@@ -1,4 +1,5 @@
 import { StyleSheet, Platform, Dimensions } from 'react-native'
+import { Colors } from '../../support/constants'
 const hasNotch = Platform.OS === 'ios' && Dimensions.get('window').height >= 812
 
 export default StyleSheet.create({
@@ -19,8 +20,8 @@ export default StyleSheet.create({
     paddingVertical: hasNotch ? 15 : 0,
     borderRadius: 6,
     marginHorizontal: 15,
-    backgroundColor: 'white', 
-    shadowColor: 'black',
+    backgroundColor: Colors.white, 
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -34,7 +35,7 @@ export default StyleSheet.create({
     marginRight: 20,
   },
   searchText: {
-    color: 'dimgray',
+    color: Colors.grey01,
     fontSize: 14, 
     fontFamily: Platform.OS === 'android' ? 'Roboto' : undefined
   },
@@ -53,13 +54,13 @@ export default StyleSheet.create({
   header: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: 'black',
+    color: Colors.black,
     paddingBottom: 5,
   },
   subheader: {
     paddingBottom: 5,
     fontSize: 14,
-    color: 'dimgray',
+    color: Colors.grey01,
   },
   searchButton: {
     height: 40,
@@ -74,8 +75,8 @@ export default StyleSheet.create({
     marginBottom: 10,
     marginRight: 15,
     borderRadius: 10,
-    backgroundColor: 'white', 
-    shadowColor: 'black',
+    backgroundColor: Colors.white, 
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -84,11 +85,16 @@ export default StyleSheet.create({
     shadowRadius: 3.84,
   },
   viewButtonText: {
-    color: 'dimgray',
+    color: Colors.grey01,
     fontSize: 16,
   },
   listContainer: { 
     marginHorizontal: 20,
     marginTop: 20 
+  },
+  separator: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.grey02, 
+    marginBottom: 15,
   }
 })

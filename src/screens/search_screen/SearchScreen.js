@@ -1,21 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, ScrollView, StatusBar, FlatList, Text, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import Geolocation from '@react-native-community/geolocation'
 import styles from './SearchScreen.Styles'
 import SearchBar from '../../components/search_bar/SearchBar'
 import Picker from '../../components/picker/Picker'
 import { fetchSearchData } from '../../redux/actions/SearchActionsThunks'
+import { setCurrentItem, setCurrentLocation } from '../../redux/actions/SearchActions'
 
 
 const SearchItem = ({ searchItem, navigation }) => {
+  const dispatch = useDispatch()
+
   const { name, rating, review_count, location } = searchItem
   const { address1, city, state, country } = location
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(position => {
+      const currentLocation = { lat: position.coords.latitude, long: position.coords.longitude }
+      dispatch(setCurrentLocation(currentLocation))
+    })
+  }, [])
 
   return (
     <TouchableOpacity 
       style={styles.itemContainer}
       onPress={() => {
-        navigation.navigate('Details Screen')}
+        dispatch(setCurrentItem(searchItem))
+        navigation.navigate('Details Item Screen')}
       }
     >
       <Text style={styles.header}>{name}</Text>
@@ -26,7 +38,7 @@ const SearchItem = ({ searchItem, navigation }) => {
 }
 
 const Separator = () => {
-  return <View style={{ borderBottomWidth: 1, borderBottomColor: '#a9a9a9', marginBottom: 15 }} />
+  return <View style={styles.separator} />
 }
 
 const SearchScreen = ({ navigation }) => {

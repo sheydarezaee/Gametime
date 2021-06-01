@@ -1,11 +1,13 @@
 import { persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { FETCH_SEARCH_DATA_SUCCESS, SHOW_CATEGORY_FILTER, SET_CATEGORY_LIST } from "../actions/SearchActionsConstants"
+import { FETCH_SEARCH_DATA_SUCCESS, SHOW_CATEGORY_FILTER, SET_CATEGORY_LIST, SET_CURRENT_ITEM, SET_CURRENT_LOCATION } from "../actions/SearchActionsConstants"
 
 const initialState = {
   searchedData: [],
   showCategoryFilter: false,
   categoryList: [],
+  currentItem: {},
+  currentLocation: {},
 }
 
 const SearchReducer = (state = initialState, action) => {
@@ -26,6 +28,16 @@ const SearchReducer = (state = initialState, action) => {
       return {
         ...state,
         categoryList: action.categoryList,
+      }
+    case SET_CURRENT_ITEM:
+      return {
+        ...state,
+        currentItem: action.currentItem,
+      }
+    case SET_CURRENT_LOCATION:
+      return {
+        ...state,
+        currentLocation: action.currentLocation,
       }
 
     default:

@@ -1,5 +1,6 @@
 import { StyleSheet, Platform, Dimensions } from 'react-native'
 const hasNotch = Platform.OS === 'ios' && Dimensions.get('window').height >= 812
+import { Colors } from '../../support/constants'
 
 export default StyleSheet.create({
   searchButtonContainer: {
@@ -10,15 +11,18 @@ export default StyleSheet.create({
     paddingVertical: hasNotch ? 15 : 0,
     borderRadius: 6,
     marginHorizontal: 15,
-    backgroundColor: 'white', 
-    shadowColor: 'black',
+    backgroundColor: Colors.white, 
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
     }
   },
+  locationContainer: {
+    marginBottom: 10,
+  },
   background: {
-    backgroundColor: '#d6eef8',
+    backgroundColor: Colors.lightBlue,
     height:45,
     borderRadius: 5,
     marginHorizontal: 12,

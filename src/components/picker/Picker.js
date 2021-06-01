@@ -1,7 +1,7 @@
 import React from "react"
 import { View } from "react-native"
 import RNPickerSelect from 'react-native-picker-select'
-import { defaultPickerStyles, errorPickerStyles, styles } from './Picker.Styles'
+import { defaultPickerStyles, styles } from './Picker.Styles'
 
 const Picker = ({ items, label, value, onValueChange}) => {
   return (

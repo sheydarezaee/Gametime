@@ -2,7 +2,7 @@ import React from 'react'
 import {TextInput , View } from 'react-native'
 import styles from './SearchBar.Styles'
 
-const SearchBar = ({term , onTermChange , onLocationChange, onHandleSearch}) =>{
+const SearchBar = ({term, location, onTermChange , onLocationChange, onHandleSearch}) =>{
   return(
     <View>
       <View style={styles.searchButtonContainer}>
@@ -17,7 +17,7 @@ const SearchBar = ({term , onTermChange , onLocationChange, onHandleSearch}) =>{
           autoFocus
         />
       </View>
-      <View style={[styles.searchButtonContainer, { marginBottom: 10 }]}>
+      <View style={[styles.searchButtonContainer, styles.locationContainer]}>
         <TextInput
           style={styles.inputStyle} 
           placeholder="Enter location"
