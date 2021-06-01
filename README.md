@@ -1,9 +1,12 @@
 # yelp-point
 A minimal Yelp client made in React Native which leverages the Yelp GraphQL API
 
+Please run the app iOS version of the app.
+
 ● The app leverages the Yelp Search API 
 (https://www.yelp.com/developers/graphql/query/search) to display a list of yelp locations based on the search criteria. 
 ● The app leverages the GraphQL API from Yelp (https://graphql.org/) 
+● The app uses typescript
 ● The following functionalities are supported: 
 ○ Searching a “term” such as “Dinner” or “Mini Golf” 
 ○ Implementing search based on the user’s location

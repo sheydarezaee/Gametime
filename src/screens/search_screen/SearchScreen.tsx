@@ -8,6 +8,9 @@ import Picker from '../../components/picker/Picker'
 import { fetchSearchData } from '../../redux/actions/SearchActionsThunks'
 import { setCurrentItem, setCurrentLocation } from '../../redux/actions/SearchActions'
 
+export type Props = {
+  navigation: Record<string, unknown>
+}
 
 const SearchItem = ({ searchItem, navigation }) => {
   const dispatch = useDispatch()
@@ -41,7 +44,9 @@ const Separator = () => {
   return <View style={styles.separator} />
 }
 
-const SearchScreen = ({ navigation }) => {
+const SearchScreen: React.FC<Props> = ({
+  navigation,
+}) => {
   const [term, setTerm] = useState('')
   const [location, setLocation] =useState('')
   const [data, setData ] = useState([])
