@@ -6,6 +6,11 @@ export default StyleSheet.create({
   container: {
     backgroundColor: Colors.grey05,
   },
+  searchBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   itemContainer: {
     marginVertical: 10,
   },
@@ -16,6 +21,9 @@ export default StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 5,
     backgroundColor: Colors.grey06,
+  },
+  cancelButton: {
+    marginTop: 15,
   },
   listContainer: { 
     marginHorizontal: 20,

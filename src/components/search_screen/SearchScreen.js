@@ -6,6 +6,7 @@ import SearchBar from '../search_bar/SearchBar'
 import { fetchSearchData } from '../../redux/actions/SearchActionsThunks'
 import { getDayFromDateString, getMonthAndDayFromDateString } from '../../support/utils'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const SearchItem = ({ searchItem, section }) => {
   const { title } = section
@@ -73,16 +74,26 @@ const SearchScreen = () => {
     setData(searchedData)
   }
 
+  const onPressCancel = () => {
+    setTerm('')
+    setData([])
+  }
+
   return (
     <ScrollView 
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.container}
     >
       <StatusBar barStyle="dark-content" />
-      <SearchBar 
-        term={term}
-        onTermChange={handleSearch}
-      />
+      <View style={styles.searchBar}>
+        <SearchBar 
+          term={term}
+          onTermChange={handleSearch}
+        />
+        <TouchableOpacity style={styles.cancelButton} onPress={onPressCancel}>
+          <Text style={styles.text}>CANCEL</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.listContainer}>
         <SectionList
           sections={searchedData}
