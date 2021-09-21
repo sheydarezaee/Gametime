@@ -1,17 +1,10 @@
-# yelp-point
-A minimal Yelp client made in React Native which leverages the Yelp GraphQL API
+# Gametime
+A minimal Search client made in React Native which utilizes Gametime staging API
 
-Please run the iOS version of the app.
-
-● The app leverages the Yelp Search API 
-(https://www.yelp.com/developers/graphql/query/search) to display a list of yelp locations based on the search criteria. 
-● The app leverages the GraphQL API from Yelp (https://graphql.org/) 
-● The app uses typescript
-● The following functionalities are supported: 
-○ Searching a “term” such as “Dinner” or “Mini Golf” 
-○ Implementing search based on the user’s location
-○ Implementing Category based filtering using the categories
-○ 2 different ways to view the points of interest, details view and map
+● The app leverages the Gametime API for a search
+(https://mobile-staging.gametime.co/v1/search?q=oakland) 
+The API returns three different result types: ​​Events​​, ​​Venues​​, and ​​Performers​​.
+The UI displays the events, performers and venues details based on the search key term.
 
 ## Utilized
 
@@ -132,42 +125,9 @@ All console.log's of the iOS or Android app can be displayed using one of the fo
 	$ react-native log-android
 ```
 
-## search queries with graphQl Yelp API
-
-
-**Example:**
-
-``` javascript
-const GET_ITEMS = gql`
-    query Items($term: String!, $location: String!) {
-      items (
-        term: $term,
-        location: $location,
-        limit: 10) {
-        business {
-          name
-          rating
-          review_count
-          location {
-            address1
-            city
-            state
-            country
-          }
-        }
-      }
-    }
-  `
-  const { loading, data } = useQuery(GET_ITEMS, {
-    variables: { term, location },
-  })
-```
-
 ## Technology stack
 
 The following packages compose the technology stack of the project:
 
 - react-native
 - react-navigation
-- graphQl
-- apollo
