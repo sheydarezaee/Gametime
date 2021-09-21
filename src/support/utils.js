@@ -1,14 +1,10 @@
-export const getPickerCategories = (results) => {
-  const categories = results.reduce((acc, current) => {
-    acc.push(current && current.categories)
-    return acc
-  }, [])
-  const uniqueCategories = [... new Set([].concat(...categories).map((i) => i.title))]
-  return uniqueCategories.reduce((acc, current) => {
-    acc.push({
-      label: current,
-      value: current,
-    })
-    return acc
-  }, [])
+export const getMonthAndDayFromDateString = (date) => {
+  const dateParsed = new Date(Date.parse(date))
+  return `${dateParsed.getMonth()}/${dateParsed.getDate()}`
+}
+
+export const getDayFromDateString = (date) => {
+  const week = new Array('Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat')
+  const dateParsed = new Date(Date.parse(date))
+  return `${week[dateParsed.getDay()]}`
 }

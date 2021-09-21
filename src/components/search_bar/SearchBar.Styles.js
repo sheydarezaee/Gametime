@@ -9,7 +9,7 @@ export default StyleSheet.create({
     marginTop: 15,
     paddingHorizontal: 15,
     paddingVertical: hasNotch ? 15 : 0,
-    borderRadius: 6,
+    borderRadius: 25,
     marginHorizontal: 15,
     backgroundColor: Colors.white, 
     shadowColor: Colors.black,
@@ -17,9 +17,6 @@ export default StyleSheet.create({
       width: 0,
       height: 2,
     }
-  },
-  locationContainer: {
-    marginBottom: 10,
   },
   background: {
     backgroundColor: Colors.lightBlue,
@@ -33,10 +30,17 @@ export default StyleSheet.create({
   inputStyle: {
     flex: 1,
     fontSize: 14,
+    fontWeight: 'bold',
     marginLeft: 10,
   },
-  iconStyle:{
-    fontSize: 35,
-    alignSelf: "center"
-  }
+  searchIconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center', 
+    padding: 5,
+  },
+  searchIcon: {
+    height: 22,
+    width: 22,
+    // tintColor: Colors.grey05,
+  },
 })

@@ -7,7 +7,6 @@ const persistSearchConfig = {
   timeout: 10000,
   key: 'rootSearch',
   storage: AsyncStorage,
-  // whitelist: ['searchedData', 'showCategoryFilter'],
   // whitelist: 'searchedData'
 }
 const persistSearchReducer = persistReducer(persistSearchConfig, SearchReducer)

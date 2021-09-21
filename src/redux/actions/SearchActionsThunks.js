@@ -1,26 +1,39 @@
-import yelp from "../../api/yelp"
-import { baseUrl, GET_ITEMS_QUERY } from "../../support/constants"
-import { getPickerCategories } from "../../support/utils"
-import { setCategoryFilter, setCategoryList } from "./SearchActions"
+import axios from 'axios'
+import { baseUrl } from "../../support/constants"
 import { FETCH_SEARCH_DATA, FETCH_SEARCH_DATA_SUCCESS, FETCH_SEARCH_DATA_FAILURE } from "./SearchActionsConstants"
 
-export function fetchSearchData(term, location) {
+export function fetchSearchData(term) {
   return (dispatch) => {
     dispatch({ type: FETCH_SEARCH_DATA })
-    yelp.post(
-      `${baseUrl}`, {
-        query: GET_ITEMS_QUERY,
-        variables: { term, location }
+    axios.get(`${baseUrl}?q=${term}`, {
+      config: {
+        'headers' : {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Content-Type': 'application/json',
+          'Accept-Language': 'en_US',
+        }
       }
-    )
+    })
     .then((response) => {
-      const results = response.data.data.search.business
-      dispatch({ type: FETCH_SEARCH_DATA_SUCCESS, payload: results })
-      dispatch(setCategoryFilter(true))
-
-      const pickerCategories = getPickerCategories(results) 
-      dispatch(setCategoryList(pickerCategories))
-
+      let results = response.data
+      Object.keys(response.data).map(function(key, index) {
+        results[key].splice(3)
+      })
+      const mapped_results = [
+        {
+          title: "Events",
+          data: results.events
+        },
+        {
+          title: "Performers",
+          data: results.performers
+        },
+        {
+          title: "Venues",
+          data: results.venues
+        },
+      ]
+      dispatch({ type: FETCH_SEARCH_DATA_SUCCESS, payload: mapped_results })
     }, (error) => {
       dispatch({ type: FETCH_SEARCH_DATA_FAILURE, payload: error })
     })
